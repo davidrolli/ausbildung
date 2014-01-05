@@ -2,12 +2,12 @@
 
 require(APPPATH.'libraries/REST_Controller.php');
 
-$papiere = array(
-  array ('cd' => 11, 'titel' => 'Dokument 1'),
-  array ('cd' => 12, 'titel' => 'Dokument 2'),
-  array ('cd' => 13, 'titel' => 'Dokument 3'),
-  array ('cd' => 14, 'titel' => 'Dokument 4'),
-  array ('cd' => 15, 'titel' => 'Dokument 5')); 
+$skizzen = array(
+  array ('cd' => 11, 'titel' => 'Skizze 1'),
+  array ('cd' => 12, 'titel' => 'Skizze 2'),
+  array ('cd' => 13, 'titel' => 'Skizze 3'),
+  array ('cd' => 14, 'titel' => 'Skizze 4'),
+  array ('cd' => 15, 'titel' => 'Skizze 5')); 
 
 
 class Docs extends REST_Controller {
@@ -15,7 +15,6 @@ class Docs extends REST_Controller {
   function __construct()
   {
     parent::__construct();
-    echo ("notizen_url = '" . $this->config->item('notizen_url') . "'\n");
   }
 
 
@@ -31,56 +30,56 @@ class Docs extends REST_Controller {
   }
 
 
-  public function dokumente_get()
+  public function skizzen_get()
   {
-    global $papiere;
+    global $skizzen;
     
-    if($papiere)
+    if($skizzen)
     {
-      $this->response($papiere, 200);           // 200 being the HTTP response code
+      $this->response($skizzen, 200);           // 200 being the HTTP response code
     }
 
     else
     {
-      $this->response(array('error' => 'Konnte keine Dokumente finden!'), 404);
+      $this->response(array('error' => 'Konnte keine Skzzen finden!'), 404);
     }
   }
 
 
-  function dokument_get()
+  function skizze_get()
   {
-    global $papiere;
+    global $skizzen;
 
     if($this->get('id') != 0 && !$this->get('id') )
     {
       $this->response(NULL, 400);
     }
 
-    $result = @$papiere[$this->get('id')];
+    $skizze = @$skizzen[$this->get('id')];
 
-    if($result)
+    if($skizze)
     {
-        $this->response($result, 200);                  // 200 being the HTTP response code
+        $this->response($skizze, 200);                  // 200 being the HTTP response code
     }
     else
     {
-        $this->response(array('error' => 'Konnte das Dokument mit der Id=' . $this->get('id') . ' nicht finden!'), 404);
+        $this->response(array('error' => 'Konnte die Skizze mit der Id=' . $this->get('id') . ' nicht finden!'), 404);
     }
   }
 
 
-  function dokument_post()
+  function skizze_post()
   {
-    //$this->some_model->updateDokument( $this->get('id') );
+    //$this->some_model->updateSkizze( $this->get('id') );
     $message = array('id' => $this->get('id'), 'cd' => $this->post('cd'), 'titel' => $this->post('titel'), 'message' => 'ADDED!');
     
     $this->response($message, 200);                   // 200 being the HTTP response code
   }
 
   
-  function dokument_delete()
+  function skizze_delete()
   {
-    //$this->some_model->deleteDokument( $this->get('id') );
+    //$this->some_model->deleteSkizze( $this->get('id') );
       $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
       
       $this->response($message, 200);                   // 200 being the HTTP response code
