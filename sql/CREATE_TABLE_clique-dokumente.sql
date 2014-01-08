@@ -11,9 +11,9 @@ CREATE TABLE clique.dokumente
   datum date,
   werk_id integer,
   verlag_id integer,
-  schrift_cd integer NOT NULL DEFAULT 1,
+  notenschrift_cd integer NOT NULL DEFAULT 1,
   vers_nr character varying,
-  rhytmus_gerade boolean,
+  rhythmus_gerade boolean,
   rhythmus_ungerade boolean,
   rhythmus_gemischt boolean,
   rhythmus_bemerkungen character varying,
@@ -76,6 +76,15 @@ CREATE INDEX idx_datum
   USING btree
   (datum);
 
+-- Index: clique.idx_notenschrift_cd
+
+-- DROP INDEX clique.idx_notenschrift_cd;
+
+CREATE INDEX idx_notenschrift_cd
+  ON clique.dokumente
+  USING btree
+  (notenschrift_cd);
+
 -- Index: clique.idx_rhythmus_gemischt
 
 -- DROP INDEX clique.idx_rhythmus_gemischt;
@@ -92,7 +101,7 @@ CREATE INDEX idx_rhythmus_gemischt
 CREATE INDEX idx_rhythmus_gerade
   ON clique.dokumente
   USING btree
-  (rhytmus_gerade);
+  (rhythmus_gerade);
 
 -- Index: clique.idx_rhythmus_ungerade
 
@@ -102,15 +111,6 @@ CREATE INDEX idx_rhythmus_ungerade
   ON clique.dokumente
   USING btree
   (rhythmus_ungerade);
-
--- Index: clique.idx_schrift_cd
-
--- DROP INDEX clique.idx_schrift_cd;
-
-CREATE INDEX idx_schrift_cd
-  ON clique.dokumente
-  USING btree
-  (schrift_cd);
 
 
 -- Trigger: update_dokumente_rec_last_updated on clique.dokumente
