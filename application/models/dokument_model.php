@@ -140,15 +140,50 @@ class Dokument_model extends CI_Model {
   * @return integer                 indicates the number of items  
   * 
   */ 
-  function create_dokument($data)
+  function create_dokument($input_data)
   {
-    echo "[Dokument_model-> create_dokument: started... ]";
-    
-    $this->title   = $_POST['title']; // please read the below note
-    $this->content = $_POST['content'];
-    $this->date    = time();
+    // Debug
+    $this->firephp->log('Dokument_model-> create_dokument: started ... ');
+    $this->firephp->log($num, 'Dokument_model-> create_dokument:  $num');
+    $this->firephp->log($start, 'Dokument_model-> create_dokument:  $start');
 
-    $this->db->insert('entries', $this);
+    try
+    {
+      // PGSQL Syntax: 'INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', 9.99);'
+
+      $data = array();
+      $data['titel'] = 'Notenskizze';             // NOT NULL, default = 'Notenskizze'
+      $data['url'] = NULL;                        // NOT NULL
+      $data['autor_id'] = NULL;
+      $data['datum'] = NULL;
+      $data['werk_id'] = NULL;
+      $data['verlag_id'] = NULL;
+      $data['notenschrift_cd'] = NULL;            // NOT NULL, default = 1 (-> 'Zündstoff')
+      $data['vers_nr'] = NULL;
+      $data['rhythmus_gerade'] = NULL;
+      $data['rhythmus_ungerade'] = NULL;
+      $data['rhythmus_gemischt'] = NULL;
+      $data['rhythmus_bemerkungen'] = NULL;
+      $data['bemerkungen'] = NULL;
+      $data['copyright_datum date'] = NULL;
+
+      // Debug
+      $this->firephp->log($data, '[Dokument_model-> create_dokument: $data: ');
+      
+      $this->db->insert('clique.dokumente', $data); 
+    }
+    catch (Exception $e) 
+    {
+      // Debug
+      $this->firephp->log($sql_str, '[Dokument_model-> create_dokument: caught an exception ! ');
+
+      throw new MyException(2);
+    }
+    
+    // Debug
+    $this->firephp->log('Dokument_model-> create_dokument: ... finishing.');
+    
+//    return $out;
   }
 
 

@@ -5,7 +5,7 @@
 CREATE TABLE clique.dokumente
 (
   id serial NOT NULL,
-  titel character varying,
+  titel character varying NOT NULL DEFAULT 'Notenskizze'::character varying,
   url character varying,
   autor_id integer,
   datum date,
@@ -38,7 +38,7 @@ WITH (
 ALTER TABLE clique.dokumente
   OWNER TO postgres;
 GRANT ALL ON TABLE clique.dokumente TO postgres;
-GRANT ALL ON TABLE clique.dokumente TO clique_admins;
+GRANT ALL ON TABLE clique.dokumente TO clique_admin_group;
 
 -- Index: clique.fki_dokument_autor_id
 
