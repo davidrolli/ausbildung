@@ -39,8 +39,11 @@
 */
 
 //$route['default_controller'] = "welcome";
-$route['default_controller'] = "start";
+$route['default_controller'] = 'start';
 $route['404_override'] = '';
+
+$route['dokumente'] = 'docs/dokumente';
+$route['dokument/(:any)'] = 'docs/dokument/$1';
 
 
 /* End of file routes.php */

@@ -13,11 +13,13 @@ if (defined('ENVIRONMENT'))
   {
     case 'development':
       $config['notizen_url'] = 'D:\Daten\Clique\Trommelinstruktion\Ausbildung\Davids_Notizen\NEU';
+      $config['db_schema'] = 'clique';
     break;
   
     case 'testing':
     case 'production':
       $config['notizen_url'] = '..\Notizen';
+      $config['db_schema'] = 'clique';
     break;
 
     default:

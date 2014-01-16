@@ -3,6 +3,7 @@
 
 require(APPPATH.'libraries/REST_Controller.php');
 require_once(APPPATH.'includes/kl_messages.inc');
+require_once(APPPATH.'includes/test_data.inc');
 
 
 
@@ -11,13 +12,16 @@ class Docs extends REST_Controller {
   function __construct()
   {
     parent::__construct();
-    //echo ("notizen_url = '" . $this->config->item('notizen_url') . "'\n");
 
+    $this->config->load('config_ausbildung');
+    
+//    $this->load->helper( array('MY_response_helper') );
     $this->load->helper( array('MY_object2array_helper', 'MY_array2object_helper') );
   }
 
 
- /**
+
+ /** ******************************************************************
   * Function 'index'
   * 
   * Note ...
@@ -34,26 +38,8 @@ class Docs extends REST_Controller {
 	}
 
 
- /**
-  * Function 'check'
-  * 
-  * Test function to check paramter passing via URL
-  * 
-  * @param  integer $num      Number of records to read: default = 10
-  * @param  integer $start    Index of first reacord to read
-  * 
-  */
-  public function check($num=10, $start=0)
-  {
-    // Debug
-    //echo ('[Docs->check: $num=' . $num . ', $start=' . $start);
-    $this->firephp->log($num, '[Docs->check: $num: ');
-    $this->firephp->log($start, '[Docs->check: $start: ');
-    
-  }
 
-
- /**
+ /** ******************************************************************
   * Function 'dokumente_get'
   * 
   * REST access GET: get all 'Dokumente' or a defined number.<BR><BR>
@@ -122,12 +108,12 @@ class Docs extends REST_Controller {
   }
 
 
- /**
-  * Function 'dokumente_get'
+
+ /** ******************************************************************
+  * Function 'dokument_get'
   * 
-  * REST access GET: get all 'Dokumente' or a defined number.<BR><BR>
-  * 'num':    number of records to fetch; part of the URL<BR>
-  * 'start':  index of first record to start with; part of the URL<BR>
+  * REST access GET: get a specific 'Dokumente' defined by an id.<BR><BR>
+  * 'id':     id of the record to fetch; part of the URL<BR>
   * 'format': outputformat, either 'json' or 'xml', default='json'; as URL parameter
   * 
   * @param  integer $num      Via HTTP GET! Number of records to read: default = 10
@@ -144,7 +130,9 @@ class Docs extends REST_Controller {
 
     // Debug
     $this->firephp->log($id, '[Docs->dokument_get: $id: ');
-        
+    $this->firephp->log($id, '[Docs->dokument_get: $id: ');
+//    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
+            
     if( ($id != 0 && !$id) || !is_numeric($id) )
     {
       $this->send_response(NULL, 4, 400);
@@ -190,10 +178,11 @@ class Docs extends REST_Controller {
   }
 
 
- /**
+
+ /** ******************************************************************
   * Function 'dokument_post'
   * 
-  * Note ...
+  * CREATE a new document.
   * 
   * @param integer $data          data to output
   * @param text    $status_code   
@@ -203,17 +192,167 @@ class Docs extends REST_Controller {
   */    
   function dokument_post()
   {
-    //$this->some_model->updateDokument( $this->get('id') );
-    $message = array('id' => $this->get('id'), 'cd' => $this->post('cd'), 'titel' => $this->post('titel'), 'message' => 'ADDED!');
+    global $kl_messages;
+    global $http_messages;    
+    global $testdata;    
+        
+    // Debug
+    echo ('[Docs->dokument_post: started...');
+    $this->firephp->log('[Docs->dokument_post:  started...');
+
+    $data = $this->get('data');
+
+    // Debug
+    $data = $testdata;
+        
+    // Debug
+    $this->firephp->log($data, '[Docs->dokument_post: $data: ');
+            
+    if(!$data)
+    {
+      $this->send_response(NULL, 4, 400);
+    }
+
+    // Write new data to the database
+    //
+    try
+    {    
+      $this->load->model('Dokument_model');
+      
+      $success = $this->Dokument_model->create_dokument($data);
+
+      // Debug
+      $this->firephp->log($success, '[Docs->dokument_post: $success: ');
+  
+      if($success)
+      {
+        $this->send_response($success, 0, 200);           // 200 being the HTTP response code
+      }
+      else
+      {
+        $this->send_response(NULL, 7, 404);
+      }
+    }
+    catch (Exception $e) 
+    {
+      $c = $e->getCode();
+      
+      switch ($c) {
+        case '3':
+          $this->send_response(NULL, 3, 404);
+          break;
+
+        case '4':
+          $this->send_response(NULL, 4, 400);
+          break;
+        
+        default:
+          $this->send_response(NULL, 4, 400);
+          break;
+      }
+    }
     
-    $this->response($message, 200);                   // 200 being the HTTP response code
+    // Debug
+    echo ('[Docs->dokument_post: ...finished.');
+    $this->firephp->log('[Docs->dokument_post: ...finished.');
   }
 
+
   
- /**
+ /** ******************************************************************
+  * Function 'dokument_put'
+  * 
+  * UPDATE a specific document.
+  * 
+  * @param integer $data          data to output
+  * @param text    $status_code   
+  * @param text    $status_txt    
+  * @param text    $format        output format 'json' or 'xml', default 'json'
+  * 
+  */    
+  function dokument_put()
+  {
+    global $kl_messages;
+    global $http_messages;    
+    global $testdata;    
+            
+    // Debug
+    echo ('[Docs->dokument_put: started...');
+    $this->firephp->log('[Docs->dokument_put:  started...');
+            
+    $id = $this->get('id');
+
+    // Debug
+    $this->firephp->log($id, '[Docs->dokument_put: $id: ');
+//    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
+            
+    if( ($id != 0 && !$id) || !is_numeric($id) )
+    {
+      $this->send_response(NULL, 4, 400);
+    }
+
+    $data = $this->get('data');
+
+    // Debug
+    $data = $testdata;
+    // Debug
+    $this->firephp->log($data, '[Docs->dokument_put: $data: ');
+            
+    if(!$data)
+    {
+      $this->send_response(NULL, 4, 400);
+    }
+
+    // Write modified data to an existing record with id=X in the database
+    //
+    try
+    {    
+      $this->load->model('Dokument_model');
+      
+      $success = $this->Dokument_model->update_dokument($id, $data);
+
+      // Debug
+      $this->firephp->log($success, '[Docs->dokument_put: $success: ');
+  
+      if($success)
+      {
+        $this->send_response($success, 0, 200);           // 200 being the HTTP response code
+      }
+      else
+      {
+        $this->send_response(NULL, 7, 404);
+      }
+    }
+    catch (Exception $e) 
+    {
+      $c = $e->getCode();
+      
+      switch ($c) {
+        case '3':
+          $this->send_response(NULL, 3, 404);
+          break;
+
+        case '4':
+          $this->send_response(NULL, 4, 400);
+          break;
+        
+        default:
+          $this->send_response(NULL, 4, 400);
+          break;
+      }
+    }
+    
+    // Debug
+    echo ('[Docs->dokument_put: ...finished.');
+    $this->firephp->log('[Docs->dokument_put: ...finished.');
+  }
+
+
+
+ /** ******************************************************************
   * Function 'dokument_delete'
   * 
-  * Note ...
+  * DELETE a specific document.
   * 
   * @param integer $data          data to output
   * @param text    $status_code   
@@ -223,15 +362,72 @@ class Docs extends REST_Controller {
   */    
   function dokument_delete()
   {
-    //$this->some_model->deleteDokument( $this->get('id') );
-      $message = array('id' => $this->get('id'), 'message' => 'DELETED!');
+    global $kl_messages;
+    global $http_messages;    
+    global $testdata;       
+        
+    // Debug
+    echo ('[Docs->dokument_delete: started...');
+    $this->firephp->log('[Docs->dokument_delete:  started...');
+            
+    $id = $this->get('id');
+
+    // Debug
+    $this->firephp->log($id, '[Docs->dokument_delete: $id: ');
+            
+    if( ($id != 0 && !$id) || !is_numeric($id) )
+    {
+      $this->send_response(NULL, 4, 400);
+    }
+
+    // Delete data of an existing record with id=X in the database
+    //
+    try
+    {    
+      $this->load->model('Dokument_model');
       
-      $this->response($message, 200);                   // 200 being the HTTP response code
+      $success = $this->Dokument_model->delete_dokument($id);
+
+      // Debug
+      $this->firephp->log($success, '[Docs->dokument_delete: $success: ');
+  
+      if($success)
+      {
+        $this->send_response($success, 0, 200);           // 200 being the HTTP response code
+      }
+      else
+      {
+        $this->send_response(NULL, 7, 404);
+      }
+    }
+    catch (Exception $e) 
+    {
+      $c = $e->getCode();
+      
+      switch ($c) {
+        case '3':
+          $this->send_response(NULL, 3, 404);
+          break;
+
+        case '4':
+          $this->send_response(NULL, 4, 400);
+          break;
+        
+        default:
+          $this->send_response(NULL, 4, 400);
+          break;
+      }
+    }
+    
+    // Debug
+    echo ('[Docs->dokument_delete: ...finished.');
+    $this->firephp->log('[Docs->dokument_delete: ...finished.');
   }
     
 
- /**
-  * Function 'prep_response'
+
+ /** ******************************************************************
+  * Function 'send_response'
   * 
   * Note ...
   * 

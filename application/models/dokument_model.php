@@ -12,7 +12,7 @@ class Dokument_model extends CI_Model {
  /**
   * Function 'get_dokument'
   * 
-  * Note ...
+  * Get record with id=x.
   * 
   * @param  integer $id            primary key
   * 
@@ -142,35 +142,32 @@ class Dokument_model extends CI_Model {
   */ 
   function create_dokument($input_data)
   {
+    $success = NULL;
+    
     // Debug
     $this->firephp->log('Dokument_model-> create_dokument: started ... ');
-    $this->firephp->log($num, 'Dokument_model-> create_dokument:  $num');
-    $this->firephp->log($start, 'Dokument_model-> create_dokument:  $start');
+    $this->firephp->log($input_data, 'Dokument_model-> create_dokument:  $input_data');
 
     try
     {
-      // PGSQL Syntax: 'INSERT INTO products (product_no, name, price) VALUES (1, 'Cheese', 9.99);'
-
-      $data = array();
-      $data['titel'] = 'Notenskizze';             // NOT NULL, default = 'Notenskizze'
-      $data['url'] = NULL;                        // NOT NULL
-      $data['autor_id'] = NULL;
-      $data['datum'] = NULL;
-      $data['werk_id'] = NULL;
-      $data['verlag_id'] = NULL;
-      $data['notenschrift_cd'] = NULL;            // NOT NULL, default = 1 (-> 'Zündstoff')
-      $data['vers_nr'] = NULL;
-      $data['rhythmus_gerade'] = NULL;
-      $data['rhythmus_ungerade'] = NULL;
-      $data['rhythmus_gemischt'] = NULL;
-      $data['rhythmus_bemerkungen'] = NULL;
-      $data['bemerkungen'] = NULL;
-      $data['copyright_datum date'] = NULL;
-
+      $data = $input_data;
+      
       // Debug
       $this->firephp->log($data, '[Dokument_model-> create_dokument: $data: ');
       
-      $this->db->insert('clique.dokumente', $data); 
+      // !!! INSERT will be triggered !!!
+      //
+      $s = $this->config->item('db_schema') . '.dokumente';
+      $this->db->insert($s, $data);
+      
+// FIXME!      
+      if (1 == 1) {
+        $success = TRUE;
+      }
+      else {
+        $success = FALSE;        
+      }
+       
     }
     catch (Exception $e) 
     {
@@ -183,7 +180,7 @@ class Dokument_model extends CI_Model {
     // Debug
     $this->firephp->log('Dokument_model-> create_dokument: ... finishing.');
     
-//    return $out;
+    return $success;
   }
 
 
@@ -197,34 +194,101 @@ class Dokument_model extends CI_Model {
   * @return integer Indicates the number of items  
   * 
   */ 
-  function update_dokument($id, $data)
+  function update_dokument($id, $input_data)
   {
-    echo "[Dokument_model-> update_dokument: started... ]";
+    $success = NULL;
+    
+    // Debug
+    $this->firephp->log('Dokument_model-> update_dokument: started ... ');
+    $this->firephp->log($id, 'Dokument_model-> update_dokument:  $id');
+    $this->firephp->log($input_data, 'Dokument_model-> update_dokument:  $input_data');
 
-    $this->title   = $_POST['title'];
-    $this->content = $_POST['content'];
-    $this->date    = time();
+    try
+    {
+      $data = $input_data;
+      
+      // Debug
+      $this->firephp->log($data, '[Dokument_model-> update_dokument: $data: ');
+      
+      // !!! UPDATE will be triggered !!!
+      //
+      $s = $this->config->item('db_schema') . '.dokumente';
+      
+      $this->db->where('id', $id);
+      $this->db->update($s, $data);
+      
+// FIXME!      
+      if (1 == 1) {
+        $success = TRUE;
+      }
+      else {
+        $success = FALSE;        
+      }
+       
+    }
+    catch (Exception $e) 
+    {
+      // Debug
+      $this->firephp->log($sql_str, '[Dokument_model-> update_dokument: caught an exception ! ');
 
-    $this->db->update('entries', $this, array('id' => $_POST['id']));    
+      throw new MyException(2);
+    }
+    
+    // Debug
+    $this->firephp->log('Dokument_model-> update_dokument: ... finishing.');
+    
+    return $success;
   }
 
 
  /**
-  * Function 'get_all_dokumente'
+  * Function 'delete_dokument'
   * 
-  * Note ...
+  * Delete record with id=x.
   * 
-  * @param integer $data          data to output
-  * @param text    $status_code   
-  * @param text    $status_txt    
-  * @param text    $format        output format 'json' or 'xml', default 'json'
-  * @return integer Indicates the number of items  
+  * @param  integer $id           primary key
+  * @return integer $success  
   * 
   */ 
   function delete_dokument($id)
   {
-    echo "[Dokument_model-> delete_dokument: started... ]";
+    $success = NULL;
     
+    // Debug
+    $this->firephp->log('Dokument_model-> delete_dokument: started ... ');
+    $this->firephp->log($id, 'Dokument_model-> delete_dokument:  $id');
+
+    try
+    {
+      // !!! DELETE will be triggered !!!
+      //
+      $s = $this->config->item('db_schema') . '.dokumente';
+      
+      $this->db->where('id', $id);
+      $this->db->delete($s);
+      
+// FIXME!      
+      if (1 == 1) {
+        $success = TRUE;
+      }
+      else {
+        $success = FALSE;        
+      }
+       
+    }
+    catch (Exception $e) 
+    {
+      // Debug
+      $this->firephp->log($sql_str, '[Dokument_model-> update_dokument: caught an exception ! ');
+
+      throw new MyException(2);
+    }
+    
+
+    // Debug
+    $this->firephp->log('Dokument_model-> delete_dokument: ... finishing.');
+    
+    return $success;    
   }
   
 }
