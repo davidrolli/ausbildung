@@ -30,11 +30,11 @@ date_default_timezone_set('Europe/Zurich');
 switch ($_SERVER['HTTP_HOST']) {
   case 'localhost':
     $env =  'development'; 
-  break;
+    break;
   
   default:
-        $env =  'production'; 
-  break;
+    $env =  'production'; 
+    break;
 }
 
 define('ENVIRONMENT', $env);

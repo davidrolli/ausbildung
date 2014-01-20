@@ -45,6 +45,14 @@ $route['404_override'] = '';
 $route['dokumente'] = 'docs/dokumente';
 $route['dokument/(:any)'] = 'docs/dokument/$1';
 
+$route['verlage'] = 'publishers/verlage';
+$route['verlag/(:any)'] = 'publishers/verlag/$1';
+
+$route['autoren'] = 'authors/autoren';
+$route['autor/(:any)'] = 'authors/autor/$1';
+
+$route['werke'] = 'works/werke';
+$route['werk/(:any)'] = 'works/werk/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

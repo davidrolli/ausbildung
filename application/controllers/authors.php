@@ -8,7 +8,7 @@ require_once(APPPATH.'includes/test_data.inc');
 
 
 /** ******************************************************************
- * Class 'Docs'
+ * Class 'Authors'
  * 
  * @author      David Rolli, Bottmingen, Switzerland
  * @copyright   RBrains 2014
@@ -19,7 +19,7 @@ require_once(APPPATH.'includes/test_data.inc');
  * 
  */ 
 
-class Docs extends REST_Controller {
+class Authors extends REST_Controller {
 
   function __construct()
   {
@@ -41,13 +41,13 @@ class Docs extends REST_Controller {
   */    
 	public function index()
 	{
-		echo ('Hello vom "Docs" controller !');
+		echo ('Hello vom "Authors" controller !');
 	}
 
 
 
  /** ******************************************************************
-  * Function 'dokumente_get'
+  * Function 'autoren_get'
   * 
   * REST access GET: get all 'Dokumente' or a defined number.<BR><BR>
   * 'num' : number of records to fetch<BR>
@@ -59,7 +59,7 @@ class Docs extends REST_Controller {
   * @param  string   $format   As URL parameter! Outputformat ('json' or 'xml'; default = 'json')
   *   
   */    
-  public function dokumente_get()
+  public function autoren_get()
   {
     global $kl_messages;
     global $http_messages;    
@@ -84,19 +84,19 @@ class Docs extends REST_Controller {
     }
 
     // Debug
-    //echo ('[Docs->dokumente_get: $num=' . $num . ', $start=' . $start);
-    $this->firephp->log($num, '[Docs->dokumente_get: $num: ');
-    $this->firephp->log($start, '[Docs->dokumente_get: $start: ');
+    //echo ('[Authors->autoren_get: $num=' . $num . ', $start=' . $start);
+    $this->firephp->log($num, '[Authors->autoren_get: $num: ');
+    $this->firephp->log($start, '[Authors->autoren_get: $start: ');
 
     // Get data from the database
     //    
     try
     {    
-      $this->load->model('Dokument_model');
-      $result = $this->Dokument_model->get_all_dokumente($num, $start);
+      $this->load->model('Autor_model');
+      $result = $this->Autor_model->get_all_autoren($num, $start);
   
       // Debug
-      $this->firephp->log($result, '[Docs->dokumente_get: $result: ');
+      $this->firephp->log($result, '[Authors->autoren_get: $result: ');
   
       if($result)
       {
@@ -117,7 +117,7 @@ class Docs extends REST_Controller {
 
 
  /** ******************************************************************
-  * Function 'dokument_get'
+  * Function 'autor_get'
   * 
   * REST access GET: get a specific 'Dokumente' defined by an id.<BR><BR>
   * 'id':     id of the record to fetch; part of the URL<BR>
@@ -127,7 +127,7 @@ class Docs extends REST_Controller {
   * @param  string   $format   As URL parameter! Outputformat ('json' or 'xml'; default = 'json')
   *
   */
-  function dokument_get()
+  function autor_get()
   {
     global $kl_messages;
     global $http_messages;    
@@ -135,8 +135,8 @@ class Docs extends REST_Controller {
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_get: $id: ');
-    $this->firephp->log($id, '[Docs->dokument_get: $id: ');
+    $this->firephp->log($id, '[Authors->autor_get: $id: ');
+    $this->firephp->log($id, '[Authors->autor_get: $id: ');
 //    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
@@ -148,11 +148,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      $result = $this->Dokument_model->get_dokument($id);
+      $this->load->model('Autor_model');
+      $result = $this->Autor_model->get_autor($id);
   
       // Debug
-      $this->firephp->log($result, '[Docs->dokument_get: $result: ');
+      $this->firephp->log($result, '[Authors->autor_get: $result: ');
   
       if($result)
       {
@@ -186,7 +186,7 @@ class Docs extends REST_Controller {
 
 
  /** ******************************************************************
-  * Function 'dokument_post'
+  * Function 'autor_post'
   * 
   * REST access POST: create a new 'Dokument'.<BR><BR>
   * 'data': n key-value pairs; as URL parameters
@@ -194,23 +194,23 @@ class Docs extends REST_Controller {
   * @param  string  $data     Via HTTP POST !  n key-value pairs
   * 
   */    
-  function dokument_post()
+  function autor_post()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;    
         
     // Debug
-    echo ('[Docs->dokument_post: started...');
-    $this->firephp->log('[Docs->dokument_post:  started...');
+    echo ('[Authors->autor_post: started...');
+    $this->firephp->log('[Authors->autor_post:  started...');
 
     $data = $this->get('data');
 
-    // Debug !!!
-    $data = $testdata['dokument'];
+    // Debug
+    $data = $testdata['autor'];
         
     // Debug
-    $this->firephp->log($data, '[Docs->dokument_post: $data: ');
+    $this->firephp->log($data, '[Authors->autor_post: $data: ');
             
     if(!$data)
     {
@@ -221,12 +221,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->create_dokument($data);
+      $this->load->model('Autor_model');
+      $success = $this->Autor_model->create_autor($data);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_post: $success: ');
+      $this->firephp->log($success, '[Authors->autor_post: $success: ');
   
       if($success)
       {
@@ -257,14 +256,14 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_post: ...finished.');
-    $this->firephp->log('[Docs->dokument_post: ...finished.');
+    echo ('[Authors->autor_post: ...finished.');
+    $this->firephp->log('[Authors->autor_post: ...finished.');
   }
 
 
   
  /** ******************************************************************
-  * Function 'dokument_put'
+  * Function 'autor_put'
   *
   * REST access PUT: update a specific 'Dokumente' defined by an id with new data.<BR><BR>
   * 'id': id of the record to update; part of the URL<BR>
@@ -274,20 +273,20 @@ class Docs extends REST_Controller {
   * @param  string   $data     Via HTTP PUT !  n key-value-pairs
   * 
   */    
-  function dokument_put()
+  function autor_put()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;    
             
     // Debug
-    echo ('[Docs->dokument_put: started...');
-    $this->firephp->log('[Docs->dokument_put:  started...');
+    echo ('[Authors->autor_put: started...');
+    $this->firephp->log('[Authors->autor_put:  started...');
             
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_put: $id: ');
+    $this->firephp->log($id, '[Authors->autor_put: $id: ');
 //    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
@@ -298,9 +297,9 @@ class Docs extends REST_Controller {
     $data = $this->get('data');
 
     // Debug !!!
-    $data = $testdata['dokument'];
+    $data = $testdata['autor'];
     // Debug
-    $this->firephp->log($data, '[Docs->dokument_put: $data: ');
+    $this->firephp->log($data, '[Authors->autor_put: $data: ');
             
     if(!$data)
     {
@@ -311,12 +310,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->update_dokument($id, $data);
+      $this->load->model('Autor_model');
+      $success = $this->Autor_model->update_autor($id, $data);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_put: $success: ');
+      $this->firephp->log($success, '[Authors->autor_put: $success: ');
   
       if($success)
       {
@@ -347,14 +345,14 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_put: ...finished.');
-    $this->firephp->log('[Docs->dokument_put: ...finished.');
+    echo ('[Authors->autor_put: ...finished.');
+    $this->firephp->log('[Authors->autor_put: ...finished.');
   }
 
 
 
  /** ******************************************************************
-  * Function 'dokument_delete'
+  * Function 'autor_delete'
   *
   * REST access DELETE: delete a specific 'Dokument' defined by an id.<BR><BR>
   * 'id': id of the record to delete; part of the URL<BR> 
@@ -363,20 +361,20 @@ class Docs extends REST_Controller {
   * @param  integer  $id       Via HTTP DELETE !  Index (primary key) of record to delete.
   * 
   */    
-  function dokument_delete()
+  function autor_delete()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;       
         
     // Debug
-    echo ('[Docs->dokument_delete: started...');
-    $this->firephp->log('[Docs->dokument_delete:  started...');
+    echo ('[Authors->autor_delete: started...');
+    $this->firephp->log('[Authors->autor_delete:  started...');
             
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_delete: $id: ');
+    $this->firephp->log($id, '[Authors->autor_delete: $id: ');
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
     {
@@ -387,12 +385,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->delete_dokument($id);
+      $this->load->model('Autor_model');
+      $success = $this->Autor_model->delete_autor($id);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_delete: $success: ');
+      $this->firephp->log($success, '[Authors->autor_delete: $success: ');
   
       if($success)
       {
@@ -423,8 +420,8 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_delete: ...finished.');
-    $this->firephp->log('[Docs->dokument_delete: ...finished.');
+    echo ('[Authors->autor_delete: ...finished.');
+    $this->firephp->log('[Authors->autor_delete: ...finished.');
   }
     
 
@@ -509,5 +506,5 @@ class Docs extends REST_Controller {
 
 }
 
-/* End of file docs.php */
-/* Location: ./application/controllers/docs.php */
+/* End of file authors.php */
+/* Location: ./application/controllers/authors.php */

@@ -23,9 +23,12 @@
   $kl_messages[2]   = "Abfrage liefert kein oder ein ungültiges Resultat";
   $kl_messages[3]   = "Keine Daten vorhanden";
   $kl_messages[4]   = "Kein oder ungültige(r) Eingabeparameter";
-  $kl_messages[5]   = "Falscher Projektionsparameter; gültig sind: 'ch1903'->SRID:4149, 'lv03'->SRID:21781, 'lv95'->SRID:2056, 'wgs84'->SRID:4326";
+  $kl_messages[5]   = "Undefinierter Datenbank-Fehler";
   $kl_messages[6]   = "Daten konnten nicht in die Datenbank gespeichert werden";
-  $kl_messages[7]   = "Fehler 7";
+  $kl_messages[7]   = "Neuer Record konnte nicht gespeichert werden";
+  $kl_messages[8]   = "Record konnte nicht überschrieben werden";
+  $kl_messages[9]   = "Record konnte nicht gelöscht werden";
+  $kl_messages[10]  = "Fehler 10";
   $kl_messages[998] = "The request could not be understood by the server due to malformed syntax.";
   $kl_messages[999] = "Noch nicht definiert";
   

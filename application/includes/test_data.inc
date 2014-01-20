@@ -20,7 +20,7 @@ var $rec_created = NULL;
 var $rec_last_updated = NULL;
 */
 
-$testdata = array (
+$testdata['dokument'] = array (
 //  'id' => NULL,
      'titel' => 'TEST: Titel'
     ,'url' => 'rabarber.pdf'
@@ -39,5 +39,27 @@ $testdata = array (
 //  ,'rec_created' => NULL
 //  ,'rec_last_updated' => NULL
 );
+
+
+$testdata['verlag'] = array (
+//  'id' => NULL,
+     'name' => 'TEST: Verlagsname'
+    ,'ort' => 'TEST: Ort'
+);
+
+
+$testdata['werk'] = array (
+//  'id' => NULL,
+     'titel' => 'TEST: Werktitel'
+    ,'verlag_id' => 2
+);
+
+
+$testdata['autor'] = array (
+//  'id' => NULL,
+     'name' => 'TEST: Autorenname'
+     ,'vorname' => 'TEST: Autorenvorname'
+);
+
 
 ?>

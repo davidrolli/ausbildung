@@ -2,7 +2,7 @@
 
 
 /** ******************************************************************
- * Class 'Dokument_model'
+ * Class 'Verlag_model'
  * 
  * @author      David Rolli, Bottmingen, Switzerland
  * @copyright   RBrains 2014
@@ -13,7 +13,7 @@
  * 
  */ 
 
-class Dokument_model extends CI_Model {
+class Verlag_model extends CI_Model {
 
   function __construct()
   {
@@ -24,7 +24,7 @@ class Dokument_model extends CI_Model {
 
 
  /** ******************************************************************
-  * Function 'get_dokument'
+  * Function 'get_verlag'
   * 
   * Get record with id=n.
   * 
@@ -36,23 +36,22 @@ class Dokument_model extends CI_Model {
   * @return array   $out                      specified record as array  
   * 
   */ 
-  function get_dokument($id)
+  function get_verlag($id)
   {
     global $kl_messages;
     global $http_messages;    
         
     // Debug
-    $this->firephp->log('Dokument_model-> get_dokument: started ... ');
-    $this->firephp->log($id, 'Dokument_model-> get_dokument:  $id');
+    $this->firephp->log('Verlag_model-> get_verlag: started ... ');
+    $this->firephp->log($id, 'Verlag_model-> get_verlag:  $id');
 
     try
     {
       /** Create the query string. */
-      $sql_str = 'SELECT * FROM clique.v_r_dokumente WHERE id=';
-//      $sql_str = 'SELECT * FROM clique.v_dokumente WHERE id=';
+      $sql_str = 'SELECT * FROM clique.v_verlage WHERE id=';
       
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> get_dokument: $sql_str: ');
+      $this->firephp->log($sql_str, '[Verlag_model-> get_verlag: $sql_str: ');
 
       if ($id && is_int((int)$id)) {
         $sql_str .= $id;
@@ -62,15 +61,15 @@ class Dokument_model extends CI_Model {
       }
       
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> get_dokument: $sql_str: ');
+      $this->firephp->log($sql_str, '[Verlag_model-> get_verlag: $sql_str: ');
 
       /** Query the database. */
       $query = $this->db->query($sql_str);
       $out = $query->result();
 
       // Debug
-      $this->firephp->log($out, '[Dokument_model-> get_dokument: $out: ');
-      $this->firephp->log(count($out), '[Dokument_model-> get_dokument: count($out): ');
+      $this->firephp->log($out, '[Verlag_model-> get_verlag: $out: ');
+      $this->firephp->log(count($out), '[Verlag_model-> get_verlag: count($out): ');
     }
     catch (Exception $e) 
     {
@@ -86,7 +85,7 @@ class Dokument_model extends CI_Model {
 
 
  /** ******************************************************************
-  * Function 'get_all_dokumente'
+  * Function 'get_all_verlage'
   * 
   * Reads all or a defined number records from database. 
   * 
@@ -98,18 +97,17 @@ class Dokument_model extends CI_Model {
   * @return array   $out                      read records as array  
   * 
   */    
-  function get_all_dokumente($num, $start)
+  function get_all_verlage($num, $start)
   {
     // Debug
-    $this->firephp->log('Dokument_model-> get_all_dokumente: started ... ');
-    $this->firephp->log($num, 'Dokument_model-> get_all_dokumente:  $num');
-    $this->firephp->log($start, 'Dokument_model-> get_all_dokumente:  $start');
+    $this->firephp->log('Verlag_model-> get_all_verlage: started ... ');
+    $this->firephp->log($num, 'Verlag_model-> get_all_verlage:  $num');
+    $this->firephp->log($start, 'Verlag_model-> get_all_verlage:  $start');
 
     try
     {
       /** Create the query string. */
-      $sql_str = 'SELECT * FROM clique.v_r_dokumente';
-//      $sql_str = 'SELECT * FROM clique.v_dokumente';
+      $sql_str = 'SELECT * FROM clique.v_verlage';
 
       if ($num) {
         $sql_str .= " LIMIT " . $num;
@@ -120,7 +118,7 @@ class Dokument_model extends CI_Model {
       }
       
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> get_all_dokumente: $sql_str: ');
+      $this->firephp->log($sql_str, '[Verlag_model-> get_all_verlage: $sql_str: ');
 
       $query = $this->db->query($sql_str);
   
@@ -128,8 +126,8 @@ class Dokument_model extends CI_Model {
       $out = $query->result();
       
       // Debug
-      $this->firephp->log($out, '[Dokument_model-> get_all_dokumente: $out: ');
-      $this->firephp->log(count($out), '[Dokument_model-> get_all_dokumente: count($out): ');
+      $this->firephp->log($out, '[Verlag_model-> get_all_verlage: $out: ');
+      $this->firephp->log(count($out), '[Verlag_model-> get_all_verlage: count($out): ');
     }
     catch (Exception $e) 
     {
@@ -145,7 +143,7 @@ class Dokument_model extends CI_Model {
 
 
  /** ******************************************************************
-  * Function 'create_dokument'
+  * Function 'create_verlag'
   * 
   * Creates new record in database.
   * Uses active records.
@@ -157,25 +155,24 @@ class Dokument_model extends CI_Model {
   * @return boolean                           indicates success of operation 
   * 
   */ 
-  function create_dokument($input_data)
+  function create_verlag($input_data)
   {
     $success = NULL;
     
     // Debug
-    $this->firephp->log('Dokument_model-> create_dokument: started ... ');
-    $this->firephp->log($input_data, 'Dokument_model-> create_dokument:  $input_data');
-    echo ('[Dokument_model-> create_dokument: $input_data: ' . $input_data);
-    
+    $this->firephp->log('Verlag_model-> create_verlag: started ... ');
+    $this->firephp->log($input_data, 'Verlag_model-> create_verlag:  $input_data');
+
     try
     {
       $data = $input_data;
       
       // Debug
-      $this->firephp->log($data, '[Dokument_model-> create_dokument: $data: ');
+      $this->firephp->log($data, '[Verlag_model-> create_verlag: $data: ');
       
       /** INSERT new record. */
       //      
-      $s = $this->config->item('db_schema') . '.dokumente';
+      $s = $this->config->item('db_schema') . '.verlage';
       $this->db->insert($s, $data);
 
       $errnum = $this->db->_error_number();
@@ -183,11 +180,11 @@ class Dokument_model extends CI_Model {
       $affected_rows = $this->db->affected_rows();
 
       // Debug
-      $this->firephp->log($errnum, '[Dokument_model-> create_dokument: $errnum: ');
-      $this->firephp->log($errmsg, '[Dokument_model-> create_dokument: $errmsg: ');
-      echo ('[Dokument_model-> create_dokument: $errnum: ' . $errnum);
-      echo ('[Dokument_model-> create_dokument: $errmsg: \'' . $errmsg . '\'');
-      echo ('[Dokument_model-> create_dokument: $affected_rows: ' . $affected_rows);
+      $this->firephp->log($errnum, '[Verlag_model-> create_verlag: $errnum: ');
+      $this->firephp->log($errmsg, '[Verlag_model-> create_verlag: $errmsg: ');
+      echo ('[Verlag_model-> create_verlag: $errnum: ' . $errnum);
+      echo ('[Verlag_model-> create_verlag: $errmsg: \'' . $errmsg . '\'');
+      echo ('[Verlag_model-> create_verlag: $affected_rows: ' . $affected_rows);
 
       if (!$errnum && $affected_rows == 1) {
         $success = TRUE;
@@ -199,13 +196,13 @@ class Dokument_model extends CI_Model {
     catch (Exception $e) 
     {
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> create_dokument: caught an exception ! ');
+      $this->firephp->log($sql_str, '[Verlag_model-> create_verlag: caught an exception ! ');
 
       throw new Exception($kl_messages[5], 5);     // Undefined database error.
     }
     
     // Debug
-    $this->firephp->log('Dokument_model-> create_dokument: ... finishing.');
+    $this->firephp->log('Verlag_model-> create_verlag: ... finishing.');
     
     return $success;
   }
@@ -213,7 +210,7 @@ class Dokument_model extends CI_Model {
 
 
  /** ******************************************************************
-  * Function 'update_dokument'
+  * Function 'update_verlag'
   * 
   * Updates a record whith id=n with new data.
   * 
@@ -225,25 +222,25 @@ class Dokument_model extends CI_Model {
   * @return boolean                           indicates success of operation 
   * 
   */ 
-  function update_dokument($id, $input_data)
+  function update_verlag($id, $input_data)
   {
     $success = NULL;
     
     // Debug
-    $this->firephp->log('Dokument_model-> update_dokument: started ... ');
-    $this->firephp->log($id, 'Dokument_model-> update_dokument:  $id');
-    $this->firephp->log($input_data, 'Dokument_model-> update_dokument:  $input_data');
+    $this->firephp->log('Verlag_model-> update_verlag: started ... ');
+    $this->firephp->log($id, 'Verlag_model-> update_verlag:  $id');
+    $this->firephp->log($input_data, 'Verlag_model-> update_verlag:  $input_data');
 
     try
     {
       $data = $input_data;
       
       // Debug
-      $this->firephp->log($data, '[Dokument_model-> update_dokument: $data: ');
+      $this->firephp->log($data, '[Verlag_model-> update_verlag: $data: ');
       
       /** UPDATE specified record. */
       //      
-      $s = $this->config->item('db_schema') . '.dokumente';
+      $s = $this->config->item('db_schema') . '.verlage';
       
       $this->db->where('id', $id);
       $this->db->update($s, $data);
@@ -253,11 +250,11 @@ class Dokument_model extends CI_Model {
       $affected_rows = $this->db->affected_rows();
 
       // Debug
-      $this->firephp->log($errnum, '[Dokument_model-> update_dokument: $errnum: ');
-      $this->firephp->log($errmsg, '[Dokument_model-> update_dokument: $errmsg: ');
-      echo ('[Dokument_model-> update_dokument: $errnum: ' . $errnum);
-      echo ('[Dokument_model-> update_dokument: $errmsg: \'' . $errmsg . '\'');
-      echo ('[Dokument_model-> update_dokument: $affected_rows: ' . $affected_rows);
+      $this->firephp->log($errnum, '[Verlag_model-> update_verlag: $errnum: ');
+      $this->firephp->log($errmsg, '[Verlag_model-> update_verlag: $errmsg: ');
+      echo ('[Verlag_model-> update_verlag: $errnum: ' . $errnum);
+      echo ('[Verlag_model-> update_verlag: $errmsg: \'' . $errmsg . '\'');
+      echo ('[Verlag_model-> update_verlag: $affected_rows: ' . $affected_rows);
 
       if (!$errnum && $affected_rows == 1) {
         $success = TRUE;
@@ -269,13 +266,13 @@ class Dokument_model extends CI_Model {
     catch (Exception $e) 
     {
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> update_dokument: caught an exception ! ');
+      $this->firephp->log($sql_str, '[Verlag_model-> update_verlag: caught an exception ! ');
 
       throw new Exception($kl_messages[5], 5);     // Undefined database error.
     }
 
     // Debug
-    $this->firephp->log('Dokument_model-> update_dokument: ... finishing.');
+    $this->firephp->log('Verlag_model-> update_verlag: ... finishing.');
     
     return $success;
   }
@@ -283,7 +280,7 @@ class Dokument_model extends CI_Model {
 
 
  /** ******************************************************************
-  * Function 'delete_dokument'
+  * Function 'delete_verlag'
   * 
   * Delete record with id=n.
   * 
@@ -294,19 +291,19 @@ class Dokument_model extends CI_Model {
   * @return boolean                           indicates success of operation 
   * 
   */ 
-  function delete_dokument($id)
+  function delete_verlag($id)
   {
     $success = NULL;
     
     // Debug
-    $this->firephp->log('Dokument_model-> delete_dokument: started ... ');
-    $this->firephp->log($id, 'Dokument_model-> delete_dokument:  $id');
+    $this->firephp->log('Verlag_model-> delete_verlag: started ... ');
+    $this->firephp->log($id, 'Verlag_model-> delete_verlag:  $id');
 
     try
     {
       /** DELETE specified record. */
       //
-      $s = $this->config->item('db_schema') . '.dokumente';
+      $s = $this->config->item('db_schema') . '.verlage';
       
       $this->db->where('id', $id);
       $this->db->delete($s);
@@ -316,11 +313,11 @@ class Dokument_model extends CI_Model {
       $affected_rows = $this->db->affected_rows();
 
       // Debug
-      $this->firephp->log($errnum, '[Dokument_model-> delete_dokument: $errnum: ');
-      $this->firephp->log($errmsg, '[Dokument_model-> delete_dokument: $errmsg: ');
-      echo ('[Dokument_model-> delete_dokument: $errnum: ' . $errnum);
-      echo ('[Dokument_model-> delete_dokument: $errmsg: \'' . $errmsg . '\'');
-      echo ('[Dokument_model-> delete_dokument: $affected_rows: ' . $affected_rows);
+      $this->firephp->log($errnum, '[Verlag_model-> delete_verlag: $errnum: ');
+      $this->firephp->log($errmsg, '[Verlag_model-> delete_verlag: $errmsg: ');
+      echo ('[Verlag_model-> delete_verlag: $errnum: ' . $errnum);
+      echo ('[Verlag_model-> delete_verlag: $errmsg: \'' . $errmsg . '\'');
+      echo ('[Verlag_model-> delete_verlag: $affected_rows: ' . $affected_rows);
 
       if (!$errnum && $affected_rows == 1) {
         $success = TRUE;
@@ -333,14 +330,14 @@ class Dokument_model extends CI_Model {
     catch (Exception $e) 
     {
       // Debug
-      $this->firephp->log($sql_str, '[Dokument_model-> update_dokument: caught an exception ! ');
+      $this->firephp->log($sql_str, '[Verlag_model-> update_verlag: caught an exception ! ');
 
       throw new Exception($kl_messages[5], 5);     // Undefined database error.
     }
     
 
     // Debug
-    $this->firephp->log('Dokument_model-> delete_dokument: ... finishing.');
+    $this->firephp->log('Verlag_model-> delete_verlag: ... finishing.');
     
     return $success;    
   }
@@ -348,5 +345,5 @@ class Dokument_model extends CI_Model {
 }
 
 
-/* End of file dokument_model.php */
-/* Location: ./application/model/dokument_model.php */
+/* End of file verlag_model.php */
+/* Location: ./application/model/verlag_model.php */

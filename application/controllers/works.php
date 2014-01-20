@@ -8,7 +8,7 @@ require_once(APPPATH.'includes/test_data.inc');
 
 
 /** ******************************************************************
- * Class 'Docs'
+ * Class 'Works'
  * 
  * @author      David Rolli, Bottmingen, Switzerland
  * @copyright   RBrains 2014
@@ -19,7 +19,7 @@ require_once(APPPATH.'includes/test_data.inc');
  * 
  */ 
 
-class Docs extends REST_Controller {
+class Works extends REST_Controller {
 
   function __construct()
   {
@@ -41,13 +41,13 @@ class Docs extends REST_Controller {
   */    
 	public function index()
 	{
-		echo ('Hello vom "Docs" controller !');
+		echo ('Hello vom "Works" controller !');
 	}
 
 
 
  /** ******************************************************************
-  * Function 'dokumente_get'
+  * Function 'werke_get'
   * 
   * REST access GET: get all 'Dokumente' or a defined number.<BR><BR>
   * 'num' : number of records to fetch<BR>
@@ -59,7 +59,7 @@ class Docs extends REST_Controller {
   * @param  string   $format   As URL parameter! Outputformat ('json' or 'xml'; default = 'json')
   *   
   */    
-  public function dokumente_get()
+  public function werke_get()
   {
     global $kl_messages;
     global $http_messages;    
@@ -84,19 +84,19 @@ class Docs extends REST_Controller {
     }
 
     // Debug
-    //echo ('[Docs->dokumente_get: $num=' . $num . ', $start=' . $start);
-    $this->firephp->log($num, '[Docs->dokumente_get: $num: ');
-    $this->firephp->log($start, '[Docs->dokumente_get: $start: ');
+    //echo ('[Works->werke_get: $num=' . $num . ', $start=' . $start);
+    $this->firephp->log($num, '[Works->werke_get: $num: ');
+    $this->firephp->log($start, '[Works->werke_get: $start: ');
 
     // Get data from the database
     //    
     try
     {    
-      $this->load->model('Dokument_model');
-      $result = $this->Dokument_model->get_all_dokumente($num, $start);
+      $this->load->model('Werk_model');
+      $result = $this->Werk_model->get_all_werke($num, $start);
   
       // Debug
-      $this->firephp->log($result, '[Docs->dokumente_get: $result: ');
+      $this->firephp->log($result, '[Works->werke_get: $result: ');
   
       if($result)
       {
@@ -117,7 +117,7 @@ class Docs extends REST_Controller {
 
 
  /** ******************************************************************
-  * Function 'dokument_get'
+  * Function 'werk_get'
   * 
   * REST access GET: get a specific 'Dokumente' defined by an id.<BR><BR>
   * 'id':     id of the record to fetch; part of the URL<BR>
@@ -127,7 +127,7 @@ class Docs extends REST_Controller {
   * @param  string   $format   As URL parameter! Outputformat ('json' or 'xml'; default = 'json')
   *
   */
-  function dokument_get()
+  function werk_get()
   {
     global $kl_messages;
     global $http_messages;    
@@ -135,8 +135,8 @@ class Docs extends REST_Controller {
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_get: $id: ');
-    $this->firephp->log($id, '[Docs->dokument_get: $id: ');
+    $this->firephp->log($id, '[Works->werk_get: $id: ');
+    $this->firephp->log($id, '[Works->werk_get: $id: ');
 //    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
@@ -148,11 +148,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      $result = $this->Dokument_model->get_dokument($id);
+      $this->load->model('Werk_model');
+      $result = $this->Werk_model->get_werk($id);
   
       // Debug
-      $this->firephp->log($result, '[Docs->dokument_get: $result: ');
+      $this->firephp->log($result, '[Works->werk_get: $result: ');
   
       if($result)
       {
@@ -186,7 +186,7 @@ class Docs extends REST_Controller {
 
 
  /** ******************************************************************
-  * Function 'dokument_post'
+  * Function 'werk_post'
   * 
   * REST access POST: create a new 'Dokument'.<BR><BR>
   * 'data': n key-value pairs; as URL parameters
@@ -194,23 +194,23 @@ class Docs extends REST_Controller {
   * @param  string  $data     Via HTTP POST !  n key-value pairs
   * 
   */    
-  function dokument_post()
+  function werk_post()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;    
         
     // Debug
-    echo ('[Docs->dokument_post: started...');
-    $this->firephp->log('[Docs->dokument_post:  started...');
+    echo ('[Works->werk_post: started...');
+    $this->firephp->log('[Works->werk_post:  started...');
 
     $data = $this->get('data');
 
-    // Debug !!!
-    $data = $testdata['dokument'];
+    // Debug
+    $data = $testdata['werk'];
         
     // Debug
-    $this->firephp->log($data, '[Docs->dokument_post: $data: ');
+    $this->firephp->log($data, '[Works->werk_post: $data: ');
             
     if(!$data)
     {
@@ -221,12 +221,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->create_dokument($data);
+      $this->load->model('Werk_model');
+      $success = $this->Werk_model->create_werk($data);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_post: $success: ');
+      $this->firephp->log($success, '[Works->werk_post: $success: ');
   
       if($success)
       {
@@ -257,14 +256,14 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_post: ...finished.');
-    $this->firephp->log('[Docs->dokument_post: ...finished.');
+    echo ('[Works->werk_post: ...finished.');
+    $this->firephp->log('[Works->werk_post: ...finished.');
   }
 
 
   
  /** ******************************************************************
-  * Function 'dokument_put'
+  * Function 'werk_put'
   *
   * REST access PUT: update a specific 'Dokumente' defined by an id with new data.<BR><BR>
   * 'id': id of the record to update; part of the URL<BR>
@@ -274,20 +273,20 @@ class Docs extends REST_Controller {
   * @param  string   $data     Via HTTP PUT !  n key-value-pairs
   * 
   */    
-  function dokument_put()
+  function werk_put()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;    
             
     // Debug
-    echo ('[Docs->dokument_put: started...');
-    $this->firephp->log('[Docs->dokument_put:  started...');
+    echo ('[Works->werk_put: started...');
+    $this->firephp->log('[Works->werk_put:  started...');
             
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_put: $id: ');
+    $this->firephp->log($id, '[Works->werk_put: $id: ');
 //    echo ("URL: '" . $this->uri->uri_string() . "'\n\n");
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
@@ -298,9 +297,9 @@ class Docs extends REST_Controller {
     $data = $this->get('data');
 
     // Debug !!!
-    $data = $testdata['dokument'];
+    $data = $testdata['werk'];
     // Debug
-    $this->firephp->log($data, '[Docs->dokument_put: $data: ');
+    $this->firephp->log($data, '[Works->werk_put: $data: ');
             
     if(!$data)
     {
@@ -311,12 +310,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->update_dokument($id, $data);
+      $this->load->model('Werk_model');
+      $success = $this->Werk_model->update_werk($id, $data);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_put: $success: ');
+      $this->firephp->log($success, '[Works->werk_put: $success: ');
   
       if($success)
       {
@@ -347,14 +345,14 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_put: ...finished.');
-    $this->firephp->log('[Docs->dokument_put: ...finished.');
+    echo ('[Works->werk_put: ...finished.');
+    $this->firephp->log('[Works->werk_put: ...finished.');
   }
 
 
 
  /** ******************************************************************
-  * Function 'dokument_delete'
+  * Function 'werk_delete'
   *
   * REST access DELETE: delete a specific 'Dokument' defined by an id.<BR><BR>
   * 'id': id of the record to delete; part of the URL<BR> 
@@ -363,20 +361,20 @@ class Docs extends REST_Controller {
   * @param  integer  $id       Via HTTP DELETE !  Index (primary key) of record to delete.
   * 
   */    
-  function dokument_delete()
+  function werk_delete()
   {
     global $kl_messages;
     global $http_messages;    
     global $testdata;       
         
     // Debug
-    echo ('[Docs->dokument_delete: started...');
-    $this->firephp->log('[Docs->dokument_delete:  started...');
+    echo ('[Works->werk_delete: started...');
+    $this->firephp->log('[Works->werk_delete:  started...');
             
     $id = $this->get('id');
 
     // Debug
-    $this->firephp->log($id, '[Docs->dokument_delete: $id: ');
+    $this->firephp->log($id, '[Works->werk_delete: $id: ');
             
     if( ($id != 0 && !$id) || !is_numeric($id) )
     {
@@ -387,12 +385,11 @@ class Docs extends REST_Controller {
     //
     try
     {    
-      $this->load->model('Dokument_model');
-      
-      $success = $this->Dokument_model->delete_dokument($id);
+      $this->load->model('Werk_model');
+      $success = $this->Werk_model->delete_werk($id);
 
       // Debug
-      $this->firephp->log($success, '[Docs->dokument_delete: $success: ');
+      $this->firephp->log($success, '[Works->werk_delete: $success: ');
   
       if($success)
       {
@@ -423,8 +420,8 @@ class Docs extends REST_Controller {
     }
     
     // Debug
-    echo ('[Docs->dokument_delete: ...finished.');
-    $this->firephp->log('[Docs->dokument_delete: ...finished.');
+    echo ('[Works->werk_delete: ...finished.');
+    $this->firephp->log('[Works->werk_delete: ...finished.');
   }
     
 
@@ -509,5 +506,5 @@ class Docs extends REST_Controller {
 
 }
 
-/* End of file docs.php */
-/* Location: ./application/controllers/docs.php */
+/* End of file works.php */
+/* Location: ./application/controllers/works.php */
