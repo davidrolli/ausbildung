@@ -53,6 +53,7 @@ class Docs extends REST_Controller {
   * 'num' : number of records to fetch<BR>
   * 'start' : index of first record to start with<BR>
   * 'format': outputformat, either 'json' or 'xml', default='json'; as URL parameter
+  * I.e.:  http://localhost/clique/ausbildung/dokumente
   * 
   * @param  integer  $num      Via HTTP GET !  Number of records to read: default = 10
   * @param  integer  $start    Via HTTP GET !  Index of first record to read
@@ -122,6 +123,7 @@ class Docs extends REST_Controller {
   * REST access GET: get a specific 'Dokumente' defined by an id.<BR><BR>
   * 'id':     id of the record to fetch; part of the URL<BR>
   * 'format': outputformat, either 'json' or 'xml', default='json'; as URL parameter
+  * I.e.:  http://localhost/clique/ausbildung/dokument/id/2
   * 
   * @param  integer  $id       Via HTTP GET !  Index (primary key) of record to read
   * @param  string   $format   As URL parameter! Outputformat ('json' or 'xml'; default = 'json')
@@ -190,6 +192,8 @@ class Docs extends REST_Controller {
   * 
   * REST access POST: create a new 'Dokument'.<BR><BR>
   * 'data': n key-value pairs; as URL parameters
+  * I.e.: http://localhost/clique/ausbildung/dokument/data?titel='TEST: Rabarber...'&
+  *         autor_id=1&verlag_id=2&notenschrift_cd=1
   * 
   * @param  string  $data     Via HTTP POST !  n key-value pairs
   * 
@@ -269,6 +273,7 @@ class Docs extends REST_Controller {
   * REST access PUT: update a specific 'Dokumente' defined by an id with new data.<BR><BR>
   * 'id': id of the record to update; part of the URL<BR>
   * 'data': n key-value pairs; as URL parameters
+  * I.e.:  http://localhost/clique/ausbildung/dokument/id/240
   * 
   * @param  integer  $id       Via HTTP PUT !  Index (primary key) of record to update.
   * @param  string   $data     Via HTTP PUT !  n key-value-pairs
@@ -359,6 +364,7 @@ class Docs extends REST_Controller {
   * REST access DELETE: delete a specific 'Dokument' defined by an id.<BR><BR>
   * 'id': id of the record to delete; part of the URL<BR> 
   * DELETE a specific document.
+  * I.e.: http://localhost/clique/ausbildung/dokument/id/241
   * 
   * @param  integer  $id       Via HTTP DELETE !  Index (primary key) of record to delete.
   * 
